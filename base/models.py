@@ -8,28 +8,34 @@ class Users(models.Model):
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
 
-class supplier(models.Model):
+class Supplier(models.Model):
     name = models.CharField(max_length=100)
     contact = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
 
-class product(models.Model):
+class Customer(models.Model):
+    name = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+
+class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=300)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    supplier = models.ForeignKey(supplier, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
 
-class purchased(models.Model):
-    product = models.ForeignKey(product, on_delete=models.CASCADE)
+class Purchase(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
 
-class sold(models.Model):
-    product = models.ForeignKey(product, on_delete=models.CASCADE)
+class Sales(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
 
 
