@@ -3,6 +3,7 @@ from rest_framework.viewsets import ModelViewSet,GenericViewSet
 from .models import ProductType,Product
 from .serializers import ProductTypeSerializer,ProductSerializer
 from rest_framework.response import Response
+from rest_framework import status
 # Create your views here.
 
 class ProductTypeApiView(ModelViewSet):
@@ -26,6 +27,35 @@ class ProductApiView(GenericViewSet):
             return Response(serializer.data)
         
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        
+    def retrieve(self,request,pk):
+
+        # try:
+        #     queryset = Product.objects.get(id=pk)
+        # except:
+        #     return Response({'error':'Product not found'},status=status.HTTP_404_NOT_FOUND)
+
+        queryset = self.get_object()
+        serializer = self.get_serializer(queryset)
+        return Response(serializer.data)
+    
+
+    def update(self,request,pk):
+        queryset = self.get_object()
+        serializer = self.get_serializer(queryset,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self,request,pk):
+        queryset = self.get_object()
+        queryset.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)  
+    
+
+
 
 
