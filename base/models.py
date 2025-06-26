@@ -11,7 +11,7 @@ class Product(models.Model):
     price = models.FloatField()
     stock = models.IntegerField()
     type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
-    department = models.ManyToManyField('Department')
+    department = models.ManyToManyField('Department', blank=True)
     
 class Purchase(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
