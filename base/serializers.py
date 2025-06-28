@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ProductType,Product
+from .models import ProductType,Product,Purchase, Vendor, Sell, Customer, Department
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
@@ -11,4 +11,29 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
+        fields = '__all__'
+
+class PurchaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Purchase
+        fields = '__all__'
+
+class VendorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vendor
+        fields = '__all__'
+
+class SellSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sell
+        fields = '__all__'
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
         fields = '__all__'
