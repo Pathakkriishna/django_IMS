@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import ProductType,Product,Purchase, Vendor, Sell, Customer, Department
 from django.contrib.auth.models import User
 
+from django.contrib.auth.hashers import make_password
 
 class ProductTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,5 +44,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+
+    def create(self, validated_data):
+        password = validated_data.get('password')
+        hash_password = make_password(password)
+        validated_data['password'] = hash_password
+        return User.objects.create(**validated_data)
+        
+
+
+
+
 
 

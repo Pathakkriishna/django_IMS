@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 # ----------- Product type  API views -----------
@@ -269,9 +270,11 @@ class UserApiView(GenericViewSet):
     serializer_class = UserSerializer
 
     def register(self, request):
+
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+           
             return Response(serializer.data)
 
         else:
