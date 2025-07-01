@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .models import ProductType, Product, Purchase, Vendor, Sell, Customer, Department
-from .serializers import ProductTypeSerializer, ProductSerializer, PurchaseSerializer,  VendorSerializer, SellSerializer, CustomerSerializer, DepartmentSerializer, UserSerializer
+from .serializers import ProductTypeSerializer, ProductSerializer, PurchaseSerializer, GroupSerializer,  VendorSerializer, SellSerializer, CustomerSerializer, DepartmentSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
@@ -17,7 +17,7 @@ from django.contrib.auth.hashers import make_password
 class ProductTypeApiView(ModelViewSet):
     queryset = ProductType.objects.all()
     serializer_class = ProductTypeSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
 # ----------- Product API views -----------
 
@@ -292,4 +292,13 @@ class UserApiView(GenericViewSet):
         else:
             token,_ = Token.objects.get_or_create(user=user)
             return Response(token.key)
+        
+class GroupApiView(GenericViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
         

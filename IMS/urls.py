@@ -16,50 +16,65 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from base.views import ProductTypeApiView, ProductApiView, PurchaseApiView, VendorApiView, SellApiView, CustomerApiView, DepartmentApiView, UserApiView
+from base.views import ProductTypeApiView, ProductApiView, PurchaseApiView, GroupApiView, VendorApiView, SellApiView, CustomerApiView, DepartmentApiView, UserApiView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # ----------- Product type urls -----------
 
-    path('product/types/',ProductTypeApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('product/types/<int:pk>/', ProductTypeApiView.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
+    path('product/types/',
+         ProductTypeApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('product/types/<int:pk>/', ProductTypeApiView.as_view(
+        {'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
 
     # ----------- Product urls -----------
 
-    path('products/',ProductApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('products/<int:pk>/',ProductApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+    path('products/',
+         ProductApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('products/<int:pk>/',
+         ProductApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
 
     # ----------- Purchase urls -----------
 
-    path('purchases/',PurchaseApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('purchases/<int:pk>/',PurchaseApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+    path('purchases/',
+         PurchaseApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('purchases/<int:pk>/', PurchaseApiView.as_view(
+        {'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
 
     # ----------- Vendor urls -----------
 
     path('vendors/', VendorApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('vendors/<int:pk>/',VendorApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+    path('vendors/<int:pk>/',
+         VendorApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
 
     # ----------- Sells urls -----------
 
-    path('sells/',SellApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('sells/<int:pk>/',SellApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+    path('sells/', SellApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('sells/<int:pk>/',
+         SellApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
 
     # ----------- Customer urls -----------
 
-    path('customers/',CustomerApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('customers/<int:pk>/',CustomerApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+    path('customers/',
+         CustomerApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('customers/<int:pk>/', CustomerApiView.as_view(
+        {'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
 
     # ----------- Department urls -----------
-    
-    path('departments/',DepartmentApiView.as_view({'get': 'list', 'post': 'create'})),
-    path('departments/<int:pk>/',DepartmentApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+
+    path('departments/',
+         DepartmentApiView.as_view({'get': 'list', 'post': 'create'})),
+    path('departments/<int:pk>/', DepartmentApiView.as_view(
+        {'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
 
     # ------------ User urls -----------
-    path('users/register/',UserApiView.as_view({'post': 'register'})),
-    path('users/login/',UserApiView.as_view({'post': 'login'})),
+    path('users/register/', UserApiView.as_view({'post': 'register'})),
+    path('users/login/', UserApiView.as_view({'post': 'login'})),
 
-   
+    path('groups/', GroupApiView.as_view({'get': 'list'})),
+    # path('groups/<int:pk>/',GroupApiView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+
+
 
 ]
