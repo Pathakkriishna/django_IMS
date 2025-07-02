@@ -25,10 +25,14 @@ class ProductTypeApiView(ModelViewSet):
 class ProductApiView(GenericViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    filterset_fields = ['type']
+    search_fields = ['name','description']
 
     def list(self, request):
         queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
+        filtered_queryset = self.filter_queryset(queryset)
+        serializer = self.get_serializer(filtered_queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
